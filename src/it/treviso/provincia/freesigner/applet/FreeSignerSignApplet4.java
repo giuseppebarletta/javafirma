@@ -36,6 +36,8 @@ import javax.swing.*;
 import org.bouncycastle.cms.*;
 import org.bouncycastle.util.encoders.*;
 
+import netscape.javascript.JSObject;
+
 
 /**
  * GUI of signing operation
@@ -45,6 +47,8 @@ import org.bouncycastle.util.encoders.*;
 public class FreeSignerSignApplet4 extends JFrame {
 
 
+		private JSObject jso;
+
 		/**
          * Constructor
          *
@@ -52,9 +56,10 @@ public class FreeSignerSignApplet4 extends JFrame {
 
     public FreeSignerSignApplet4() {
         fileDaAprire = "";
-        frame = new JFrame();
-        frame.setBackground(Color.white);
-        initComponents();
+        //frame = new JFrame();
+        //frame.setBackground(Color.white);
+        //initComponents();
+        this.doSave();
     }
 
     /**
@@ -65,9 +70,10 @@ public class FreeSignerSignApplet4 extends JFrame {
     public FreeSignerSignApplet4(String filepath, String callBackUrl) {
         fileDaAprire = new String(filepath);
         this.callBackUrl = callBackUrl;
-        frame = new JFrame();
-        frame.setBackground(Color.white);
-        initComponents();
+        //frame = new JFrame();
+        //frame.setBackground(Color.white);
+        //initComponents();
+        this.doSave();
     }
 
     /**
@@ -77,19 +83,22 @@ public class FreeSignerSignApplet4 extends JFrame {
      * @param filepath String
      * @param t task ReadCertsTask
      * @param selected index of selected cert
+     * @param jso 
      */
     public FreeSignerSignApplet4(CMSSignedData c, String filepath, ReadCertsTask t, String callBackUrl,
-                    int selected) {
+                    int selected, JSObject jso) {
         fileDaAprire = new String(filepath);
         taskBack = t;
         selectedBack = selected;
-        frame = new JFrame();
+       // frame = new JFrame();
         cms = c;
         this.callBackUrl = callBackUrl;
         log = System.out;
-        frame.setBackground(Color.white);
-        initComponents();
-
+       // frame.setBackground(Color.white);
+       // initComponents();
+        this.jso = jso;
+        this.doSave();
+        
     }
 
     /**
@@ -487,6 +496,42 @@ public class FreeSignerSignApplet4 extends JFrame {
         return saved;
     }
 
+    /**
+     * Method invoked for saving
+     */
+    
+    public void doSave() {
+        log.println("Saving signed message");
+
+        String p7mFilePath = fileDaAprire + ".p7m";
+        File file = new File(p7mFilePath);
+
+            try {
+                 saved = save(Base64.encode(cms.getEncoded()), file);
+            } catch (IOException ex1) {
+            	JOptionPane.showMessageDialog(null, "Errore di I/O durante il salvataggio di "+p7mFilePath, "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+
+            if (saved) {
+                log.println("Signed message saved to: "
+                            + file.getAbsolutePath());                
+                
+                MessageDigest mdigest;
+                String mhash  = "";
+				try {
+					mdigest = MessageDigest.getInstance("SHA-512");
+					mhash = calculateHash(mdigest, p7mFilePath);
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+				String[] params = new String[] {callBackUrl+"&mhash="+mhash};
+				jso.call("goToPage", params);
+				
+
+            }
+    }
+
+    
     /**
      * A convenience method
      *

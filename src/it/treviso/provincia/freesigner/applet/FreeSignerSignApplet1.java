@@ -20,6 +20,8 @@ import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import netscape.javascript.JSObject;
+
 import org.bouncycastle.cms.CMSException;
 
 /**
@@ -39,6 +41,7 @@ public class FreeSignerSignApplet1 {
 	/**
 	 * @param callBackUrl 
 	 * @param filename
+	 * @param jso 
 	 * @param library
 	 * @throws CMSException 
 	 * @throws IOException 
@@ -46,7 +49,7 @@ public class FreeSignerSignApplet1 {
 	 * @throws FileNotFoundException 
 	 */
 
-	public void sign(String filename, String lib, String callBackUrl) {
+	public void sign(String filename, String lib, String callBackUrl, JSObject jso) {
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		task = new ReadCertsTask(null, lib, false);
 		task.go();
@@ -72,7 +75,7 @@ public class FreeSignerSignApplet1 {
 		while (!task.isDone()) {
 			System.out.print("");
 		}
-		FreeSignerSignApplet2 frame = new FreeSignerSignApplet2(task,filename,callBackUrl);
+		FreeSignerSignApplet2 frame = new FreeSignerSignApplet2(task,filename,callBackUrl,jso);
 	}
 
 }

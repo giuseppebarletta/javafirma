@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import netscape.javascript.JSObject;
+
 import org.bouncycastle.asn1.*;
 import org.bouncycastle.cms.*;
 
@@ -19,17 +21,19 @@ public class FreeSignerSignApplet2 {
 	private ReadCertsTask task;
 	private String fileName;
 	private String cb;
+	private JSObject jso;
 
-	public FreeSignerSignApplet2(ReadCertsTask t, String f,String cb) {
+	public FreeSignerSignApplet2(ReadCertsTask t, String f,String cb, JSObject jso) {
 			this.cb = cb;
 			task = t;
 			fileName = f;
+			this.jso = jso;
 			chooseCert();
 			
 	}
 	
 	public FreeSignerSignApplet2(ReadCertsTask t) {
-		this(t,"","");
+		this(t,"","",null);
 	}
 
 	private void chooseCert() {
@@ -71,7 +75,7 @@ public class FreeSignerSignApplet2 {
 				// certificato con la coccarda!
 				System.out.println("Non ripudio ed in corso di validità");
 				try {
-					FreeSignerSignApplet3 frame = new FreeSignerSignApplet3(fileName,task, cb, i);
+					FreeSignerSignApplet3 frame = new FreeSignerSignApplet3(fileName,task, cb, i,jso);
 				} catch (FileNotFoundException e) {
 					System.err.println("E: Il file "+fileName+" non esiste");
 				} catch (GeneralSecurityException e) {

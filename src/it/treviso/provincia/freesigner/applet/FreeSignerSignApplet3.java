@@ -33,6 +33,8 @@ import javax.swing.Timer;
 import it.trento.comune.j4sign.cms.*;
 import it.trento.comune.j4sign.pkcs11.PKCS11Signer;
 
+import netscape.javascript.JSObject;
+
 import org.bouncycastle.asn1.DERObjectIdentifier;
 import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.pkcs.*;
@@ -52,6 +54,7 @@ import org.bouncycastle.cms.*;
 public class FreeSignerSignApplet3 extends JFrame {
 
 	private String callBackUrl;
+	private JSObject jso;
 	/**
 	 * 
 	 */
@@ -64,12 +67,13 @@ public class FreeSignerSignApplet3 extends JFrame {
 	 *            task ReadCertsTask
 	 * @param selected
 	 *            index of certificate chosen in the table of previous frame
+	 * @param jso 
 	 * @throws GeneralSecurityException
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws CMSException
 	 */
-	public FreeSignerSignApplet3(String filepath, ReadCertsTask t, String callBackUrl, int selected)
+	public FreeSignerSignApplet3(String filepath, ReadCertsTask t, String callBackUrl, int selected, JSObject jso)
 			throws GeneralSecurityException, FileNotFoundException,
 			IOException, CMSException {
 		fileDaAprire = new String(filepath);
@@ -78,6 +82,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 		frame = new JFrame();
 		log = System.out;
 		this.callBackUrl = callBackUrl;
+		this.jso = jso;
 
 		//NOTA ROB: selectTokenFromCertIndex dovrebbe inizializzare correttamente il PKCS11Signer
 		//		inizializzando la cryptoki (se serve) e il tokenHandle relativo al certificato scelto
@@ -581,7 +586,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 					frame.hide();
 
 					FreeSignerSignApplet2 nuovo = new FreeSignerSignApplet2(
-							taskBack, fileDaAprire,callBackUrl);
+							taskBack, fileDaAprire,callBackUrl,jso);
 
 				}
 				if (task.done() && !task.error()) {
@@ -644,12 +649,12 @@ public class FreeSignerSignApplet3 extends JFrame {
 								JOptionPane.ERROR_MESSAGE);
 						frame.hide();
 						FreeSignerSignApplet2 nuovo = new FreeSignerSignApplet2(
-								taskBack, fileDaAprire, callBackUrl);
+								taskBack, fileDaAprire, callBackUrl,jso);
 
 					} else {
 						frame.hide();
 						FreeSignerSignApplet4 nuovo = new FreeSignerSignApplet4(
-								cms, fileDaAprire, taskBack, callBackUrl, selectedBack);
+								cms, fileDaAprire, taskBack, callBackUrl, selectedBack,jso);
 					}
 
 				}

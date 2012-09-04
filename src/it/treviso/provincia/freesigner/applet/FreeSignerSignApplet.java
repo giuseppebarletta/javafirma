@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import netscape.javascript.JSObject;
+
 /* 
  * TODO: implementare rilevamento anticipato della libreria pkcs11wrapper.dll
  * in modo da evitare che l'utente prosegua senza la libreria. Implementare la possibilità
@@ -77,12 +79,13 @@ public class FreeSignerSignApplet extends javax.swing.JApplet {
         	this.LIB=this.getParameter("devlib");
         }
         if (this.getParameter("callback")!=null) this.CALLBACKURL = this.getParameter("callback");
+		JSO = JSObject.getWindow(this);
         this.add(jButton2);
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         FreeSignerSignApplet1 frame = new FreeSignerSignApplet1();
-        frame.sign(FILE_NAME,LIB,CALLBACKURL);
+        frame.sign(FILE_NAME,LIB,CALLBACKURL,JSO);
     }
 
 
@@ -93,6 +96,7 @@ public class FreeSignerSignApplet extends javax.swing.JApplet {
     private String FILE_NAME = "/home/PROV2003/lorenzettoluca/richiesta_fw_20110920.pdf";
 	private String LIB = "/usr/lib/libbit4ipki.so";
 	private String CALLBACKURL = "";
+	private JSObject JSO;
     private JButton jButton2;
 
 }
