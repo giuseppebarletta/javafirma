@@ -524,8 +524,7 @@ public class FreeSignerSignApplet4 extends JFrame {
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
-				//String[] params = new String[] {callBackUrl+"&mhash="+mhash};
-				//jso.call("goToPage", params);
+				
 				jso.eval("window.location.href='"+callBackUrl+"&mhash="+mhash+"'");
 				
 
