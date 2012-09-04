@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 22
+/!svn/ver/18/lib/lib32
+END
+OCFPCSC1.dll
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/18/lib/lib32/OCFPCSC1.dll
+END
+libpkcs11wrapper.so
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/!svn/ver/18/lib/lib32/libpkcs11wrapper.so
+END
+libOCFPCSC1.so
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/18/lib/lib32/libOCFPCSC1.so
+END
+pkcs11wrapper.dll
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/!svn/ver/18/lib/lib32/pkcs11wrapper.dll
+END

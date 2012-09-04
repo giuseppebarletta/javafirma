@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/!svn/ver/23/src/it/treviso/provincia/freesigner/crl
+END
+CLICRLTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/23/src/it/treviso/provincia/freesigner/crl/CLICRLTest.java
+END
+CertificationAuthorities.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/32/src/it/treviso/provincia/freesigner/crl/CertificationAuthorities.java
+END
+X509CertRL.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/23/src/it/treviso/provincia/freesigner/crl/X509CertRL.java
+END

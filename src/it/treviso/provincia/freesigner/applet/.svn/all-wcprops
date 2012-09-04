@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/28/src/it/treviso/provincia/freesigner/applet
+END
+ReadCertsTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/32/src/it/treviso/provincia/freesigner/applet/ReadCertsTask.java
+END
+FreeSignerSignApplet.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/32/src/it/treviso/provincia/freesigner/applet/FreeSignerSignApplet.java
+END
+FreeSignerSignApplet4.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/31/src/it/treviso/provincia/freesigner/applet/FreeSignerSignApplet4.java
+END
+RootsVerifier.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/32/src/it/treviso/provincia/freesigner/applet/RootsVerifier.java
+END
+DigestSignTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/32/src/it/treviso/provincia/freesigner/applet/DigestSignTask.java
+END
+FreeSignerSignApplet1.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+src/it/treviso/provincia/freesigner/applet/FreeSignerSignApplet1.java
+END
+FreesignerConfFrame.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/32/src/it/treviso/provincia/freesigner/applet/FreesignerConfFrame.java
+END
