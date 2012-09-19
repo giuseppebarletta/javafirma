@@ -22,13 +22,8 @@ package it.treviso.provincia.freesigner.applet;
 
 import it.treviso.provincia.freesigner.applet.FreesignerVerifyFrame2;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.*;
-import java.security.cert.*;
 import java.util.*;
 
 import javax.swing.*;
@@ -47,6 +42,10 @@ import netscape.javascript.JSObject;
 public class FreeSignerSignApplet4 extends JFrame {
 
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		private JSObject jso;
 
 		/**
@@ -56,9 +55,6 @@ public class FreeSignerSignApplet4 extends JFrame {
 
     public FreeSignerSignApplet4() {
         fileDaAprire = "";
-        //frame = new JFrame();
-        //frame.setBackground(Color.white);
-        //initComponents();
         this.doSave();
     }
 
@@ -70,9 +66,6 @@ public class FreeSignerSignApplet4 extends JFrame {
     public FreeSignerSignApplet4(String filepath, String callBackUrl) {
         fileDaAprire = new String(filepath);
         this.callBackUrl = callBackUrl;
-        //frame = new JFrame();
-        //frame.setBackground(Color.white);
-        //initComponents();
         this.doSave();
     }
 
