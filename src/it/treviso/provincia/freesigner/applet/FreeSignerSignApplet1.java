@@ -65,7 +65,7 @@ public class FreeSignerSignApplet1 {
 		if (slots.size()==1) {
 			JOptionPane.showMessageDialog(null, "Rilevato "+slots.size()+" lettore", "alert", JOptionPane.PLAIN_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Rilevati "+slots.size()+" lettori, viene selezionato il primo elemento", "alert", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Rilevati "+slots.size()+" lettori, viene selezionato il primo elemento: "+slots.get(0).toString(), "alert", JOptionPane.PLAIN_MESSAGE);
 		}
 		for(Object slot: slots) {
 			System.out.println("Elemento: "+slot.toString());

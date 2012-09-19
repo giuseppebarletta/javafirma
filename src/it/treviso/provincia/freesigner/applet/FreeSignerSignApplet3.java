@@ -201,6 +201,12 @@ public class FreeSignerSignApplet3 extends JFrame {
 		byte[] dInfoBytes = null;
 		byte[] paddedBytes = null;
 		
+		/**
+		 * notes for multiple signing:
+		 * 
+		 * bytesToSign should be extracted with (byte[]) cmssigneddata.getSignedContent().getContent()
+		 */
+		
 		byte[] bytesToSign = this.signerInfoGenerator.getBytesToSign(
 				PKCSObjectIdentifiers.data, msg, "BC");
 
