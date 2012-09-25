@@ -203,8 +203,8 @@ public class FreeSignerSignApplet3 extends JFrame {
 		
 		/**
 		 * notes for multiple signing:
-		 * 
-		 * bytesToSign should be extracted with (byte[]) cmssigneddata.getSignedContent().getContent()
+		 * this.msg should be a CMSProcessableByteArray of the signedContent.
+		 * bytesToSign should be extracted with (byte[]) CMSSignedData.getSignedContent().getContent()
 		 */
 		
 		byte[] bytesToSign = this.signerInfoGenerator.getBytesToSign(
