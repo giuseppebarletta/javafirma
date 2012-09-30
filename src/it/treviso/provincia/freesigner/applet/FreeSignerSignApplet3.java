@@ -183,9 +183,17 @@ public class FreeSignerSignApplet3 extends JFrame {
 			NoSuchProviderException, NoSuchAlgorithmException, IOException,
 			CMSException {
 		
+		boolean resign = false;
 		File inputFile = new File(fileDaAprire);
-
-		this.msg = new CMSProcessableByteArray(getBytesFromFile(inputFile));
+		
+		if (fileDaAprire.substring(fileDaAprire.lastIndexOf('.')+1, fileDaAprire.length()).toLowerCase() == "p7m") {
+			// do resigning things
+			resign = true;
+			CMSSignedData actualFile = new CMSSignedData(getBytesFromFile(inputFile));
+			this.msg = actualFile.getSignedContent();
+		} else {
+			this.msg = new CMSProcessableByteArray(getBytesFromFile(inputFile));
+		}
 		this.cmsGenerator = new ExternalSignatureCMSSignedDataGenerator();
 
 		this.signersCertList = new ArrayList();
