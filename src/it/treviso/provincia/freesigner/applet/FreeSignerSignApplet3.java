@@ -53,11 +53,6 @@ import org.bouncycastle.cms.*;
  */
 public class FreeSignerSignApplet3 extends JFrame {
 
-	private String callBackUrl;
-	private JSObject jso;
-	/**
-	 * 
-	 */
 	/**
 	 * Constructor
 	 * 
@@ -183,7 +178,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			NoSuchProviderException, NoSuchAlgorithmException, IOException,
 			CMSException {
 		
-		boolean resign = false;
+		
 		File inputFile = new File(fileDaAprire);
 		
 		if (fileDaAprire.substring(fileDaAprire.lastIndexOf('.')+1, fileDaAprire.length()).toLowerCase() == "p7m") {
@@ -194,6 +189,16 @@ public class FreeSignerSignApplet3 extends JFrame {
 		} else {
 			this.msg = new CMSProcessableByteArray(getBytesFromFile(inputFile));
 		}
+		
+		/**
+		 * Code notes:
+		 * 
+		 * On CLITest.java there is a method called getSignerInfoGenerator that gives some infos about the generator that then is added on the
+		 * 
+		 * ExternalSignatureCMSSignedDataGenerator() with cmsGenerator.addSignerInf(sig)
+		 * 
+		 */
+		
 		this.cmsGenerator = new ExternalSignatureCMSSignedDataGenerator();
 
 		this.signersCertList = new ArrayList();
@@ -975,5 +980,7 @@ public class FreeSignerSignApplet3 extends JFrame {
         /* Cades Impl. */
         private X509Certificate certforcades;
         /* End Cades Impl. */
-
+    private boolean resign = false;
+	private String callBackUrl;
+	private JSObject jso;
 }
