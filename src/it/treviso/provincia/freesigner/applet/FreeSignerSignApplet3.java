@@ -41,6 +41,8 @@ import org.bouncycastle.asn1.pkcs.*;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.DigestInfo;
 import org.bouncycastle.cms.*;
+import org.bouncycastle.x509.NoSuchStoreException;
+import org.bouncycastle.x509.X509Store;
 
 /**
  * GUI of signing operation. During this frame, signing operations are
@@ -321,13 +323,26 @@ public class FreeSignerSignApplet3 extends JFrame {
 	 * @throws NoSuchAlgorithmException
 	 * @throws NoSuchProviderException
 	 * @throws CMSException
+	 * @throws NoSuchStoreException
 	 */
 	private CMSSignedData buildCMSSignedData() throws CertStoreException,
 			InvalidAlgorithmParameterException, CertificateExpiredException,
 			CertificateNotYetValidException, NoSuchAlgorithmException,
-			NoSuchProviderException, CMSException {
+			NoSuchProviderException, CMSException, NoSuchStoreException {
 
 		CMSSignedData s = null;
+		CMSSignedData actualFile = null;
+		
+		/**
+		 * resign? reads the file and creates a CMSSignedData of the actual File
+		 */
+		if (this.resign) {
+			try {
+				actualFile = new CMSSignedData(getBytesFromFile(new File(this.fileDaAprire)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 		if (this.signersCertList.size() != 0) {
 
@@ -340,6 +355,18 @@ public class FreeSignerSignApplet3 extends JFrame {
 
 			log.println("Adding certificates ... ");
 			this.cmsGenerator.addCertificatesAndCRLs(store);
+			
+			/**
+			 * resign? adds actual informations to the cmsGenerator, but there is a big problem with
+			 * the signerInfoGenerator			
+			 */
+			if(resign) {
+				SignerInformationStore actualSigners = actualFile.getSignerInfos();
+				CertStore existingCerts = actualFile.getCertificatesAndCRLs("Collection", "BC");
+				X509Store x509Store = actualFile.getAttributeCertificates("Collection", "BC");
+				this.cmsGenerator.addCertificatesAndCRLs(existingCerts);
+			}
+
 
 			// Finalmente, si può creare il l'oggetto CMS.
 			log.println("Generating CMSSignedData ");
@@ -657,6 +684,9 @@ public class FreeSignerSignApplet3 extends JFrame {
 							log.println(errorReason + ":\n" + ex);
 						} catch (CertStoreException ex) {
 							errorReason = "Errore CertStore";
+							log.println(errorReason + ":\n" + ex);
+						} catch (NoSuchStoreException ex) {
+							errorReason = "Errore NoSuchStore";
 							log.println(errorReason + ":\n" + ex);
 						}
 
