@@ -325,6 +325,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 	 * @throws CMSException
 	 * @throws NoSuchStoreException
 	 */
+	@SuppressWarnings("deprecation")
 	private CMSSignedData buildCMSSignedData() throws CertStoreException,
 			InvalidAlgorithmParameterException, CertificateExpiredException,
 			CertificateNotYetValidException, NoSuchAlgorithmException,
@@ -355,23 +356,46 @@ public class FreeSignerSignApplet3 extends JFrame {
 
 			log.println("Adding certificates ... ");
 			this.cmsGenerator.addCertificatesAndCRLs(store);
-			
-			/**
-			 * resign? adds actual informations to the cmsGenerator, but there is a big problem with
-			 * the signerInfoGenerator			
-			 */
-			if(resign) {
-				SignerInformationStore actualSigners = actualFile.getSignerInfos();
-				CertStore existingCerts = actualFile.getCertificatesAndCRLs("Collection", "BC");
-				X509Store x509Store = actualFile.getAttributeCertificates("Collection", "BC");
-				this.cmsGenerator.addCertificatesAndCRLs(existingCerts);
-			}
+
 
 
 			// Finalmente, si può creare il l'oggetto CMS.
 			log.println("Generating CMSSignedData ");
 			s = this.cmsGenerator.generate(this.msg, true);
 
+			
+			/**
+			 * Resigning process:
+			 * retrieves:
+			 * 	- SignerInformationStore
+			 *  - CertStore
+			 *  - x509Store
+			 *  first from the actualFile (the one on disk) then from che CMSSignedData generated in the previous step.
+			 * 
+			 */
+			if(resign) {
+				SignerInformationStore actualSigners = actualFile.getSignerInfos();
+				CertStore existingCerts = actualFile.getCertificatesAndCRLs("Collection", "BC");
+				X509Store x509Store = actualFile.getAttributeCertificates("Collection", "BC");
+				CertStore newCerts = s.getCertificatesAndCRLs("Collection", "BC");
+				X509Store newX509Store = s.getAttributeCertificates("Collection", "BC");
+				SignerInformationStore newSigners = s.getSignerInfos();
+				CMSSignedDataGenerator signGen = new CMSSignedDataGenerator();
+                //add old certs
+                signGen.addCertificatesAndCRLs(existingCerts);
+                //add old certs attributes
+                signGen.addAttributeCertificates(x509Store);
+                //add old signers
+                signGen.addSigners(actualSigners);
+                //add old certs
+                signGen.addCertificatesAndCRLs(newCerts);
+                //add old certs attributes
+                signGen.addAttributeCertificates(newX509Store);
+                //add old signers
+                signGen.addSigners(newSigners);
+                
+                s = signGen.generate(this.msg, true, "BC");
+			}
 			// Verifica
 
 			log.println("\nStarting CMSSignedData verification ... ");
