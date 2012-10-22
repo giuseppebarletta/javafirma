@@ -370,7 +370,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			 * 	- SignerInformationStore
 			 *  - CertStore
 			 *  - x509Store
-			 *  first from the actualFile (the one on disk) then from che CMSSignedData generated in the previous step.
+			 *  first from the actualFile (the one on disk) then from CMSSignedData generated in the previous step.
 			 * 
 			 */
 			if(resign) {
