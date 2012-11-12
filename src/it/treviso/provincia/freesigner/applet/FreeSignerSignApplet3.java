@@ -187,7 +187,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			// do resigning things
 			resign = true;
 			CMSSignedData actualFile = new CMSSignedData(getBytesFromFile(inputFile));
-			this.msg = actualFile.getSignedContent();
+			this.msg = new CMSProcessableByteArray((byte[]) cms.getSignedContent().getContent());
 		} else {
 			this.msg = new CMSProcessableByteArray(getBytesFromFile(inputFile));
 		}
