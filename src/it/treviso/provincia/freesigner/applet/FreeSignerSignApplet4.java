@@ -149,9 +149,12 @@ public class FreeSignerSignApplet4 extends JFrame {
         log.println("Saving signed message");
         
         String p7mFilePath = fileDaAprire + ".p7m";
-        if (fileDaAprire.substring(fileDaAprire.lastIndexOf('.')+1, fileDaAprire.length()).toLowerCase() == "p7m") {
+        if (fileDaAprire.substring(fileDaAprire.lastIndexOf('.')+1, fileDaAprire.length()).toLowerCase().equalsIgnoreCase("p7m")) {
         	p7mFilePath = fileDaAprire;
+        	log.println("Resigning, saving on "+p7mFilePath);
         }
+        log.println("Saving on "+p7mFilePath);
+        
         File file = new File(p7mFilePath);
 
             try {

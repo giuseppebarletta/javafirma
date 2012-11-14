@@ -183,7 +183,8 @@ public class FreeSignerSignApplet3 extends JFrame {
 		
 		File inputFile = new File(fileDaAprire);
 		
-		if (fileDaAprire.substring(fileDaAprire.lastIndexOf('.')+1, fileDaAprire.length()).toLowerCase() == "p7m") {
+		if (fileDaAprire.substring(fileDaAprire.lastIndexOf('.')+1, fileDaAprire.length()).toLowerCase().equalsIgnoreCase("p7m")) {
+			log.println("Resigning in progress...");
 			// do resigning things
 			resign = true;
 			CMSSignedData actualFile = new CMSSignedData(getBytesFromFile(inputFile));
