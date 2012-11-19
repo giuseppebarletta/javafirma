@@ -41,6 +41,7 @@ import org.bouncycastle.asn1.pkcs.*;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.DigestInfo;
 import org.bouncycastle.cms.*;
+import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.x509.NoSuchStoreException;
 import org.bouncycastle.x509.X509Store;
 
@@ -187,7 +188,14 @@ public class FreeSignerSignApplet3 extends JFrame {
 			log.println("Resigning in progress...");
 			// do resigning things
 			resign = true;
-			CMSSignedData actualFile = new CMSSignedData(getBytesFromFile(inputFile));
+			byte[] bytesFromFile = getBytesFromFile(inputFile);
+			byte[] certData;
+			try {
+				certData = Base64.decode(bytesFromFile); 
+			} catch (Exception eb64) { 
+				certData = bytesFromFile;
+			}
+			CMSSignedData actualFile = new CMSSignedData(certData);
 			this.msg = new CMSProcessableByteArray((byte[]) cms.getSignedContent().getContent());
 		} else {
 			this.msg = new CMSProcessableByteArray(getBytesFromFile(inputFile));
@@ -308,6 +316,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			this.cmsGenerator.addSignerInf(this.signerInfoGenerator);
 
 			this.signersCertList.add(javaCert);
+			javaCert.getSubjectX500Principal().toString();
 
 		}
 	}
@@ -354,6 +363,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			CertStore store = CertStore.getInstance("Collection",
 					new CollectionCertStoreParameters(this.signersCertList),
 					"BC");
+			
 
 			log.println("Adding certificates ... ");
 			this.cmsGenerator.addCertificatesAndCRLs(store);
@@ -388,9 +398,9 @@ public class FreeSignerSignApplet3 extends JFrame {
                 signGen.addAttributeCertificates(x509Store);
                 //add old signers
                 signGen.addSigners(actualSigners);
-                //add old certs
+                //add new certs
                 signGen.addCertificatesAndCRLs(newCerts);
-                //add old certs attributes
+                //add new certs attributes
                 signGen.addAttributeCertificates(newX509Store);
                 //add old signers
                 signGen.addSigners(newSigners);

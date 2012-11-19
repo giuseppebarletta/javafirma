@@ -56,7 +56,6 @@ public class FreeSignerSignApplet extends javax.swing.JApplet {
     }
 
     private void initComponents() {
-    	System.out.println("FreeSignerApplet version git-4091571");
     	jButton2 = new JButton();
     	//System.out.println(getClass().getResource("/it/treviso/provincia/freesigner/applet/firma_petizione.png").toString());
     	Icon imgicon = new ImageIcon(getClass().getResource("/it/treviso/provincia/freesigner/applet/firma_petizione.png"));

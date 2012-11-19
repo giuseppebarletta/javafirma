@@ -50,6 +50,7 @@ public class FreeSignerSignApplet1 {
 	 */
 
 	public void sign(String filename, String lib, String callBackUrl, JSObject jso) {
+		System.out.println("FreeSignerApplet version git-7d72e56");
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		task = new ReadCertsTask(null, lib, false);
 		task.go();
