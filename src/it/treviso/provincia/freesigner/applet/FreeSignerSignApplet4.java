@@ -47,6 +47,7 @@ public class FreeSignerSignApplet4 extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 		private JSObject jso;
+		private String signerCN;
 
 		/**
          * Constructor
@@ -87,6 +88,15 @@ public class FreeSignerSignApplet4 extends JFrame {
         this.jso = jso;
         this.doSave();
         
+    }
+    public FreeSignerSignApplet4(CMSSignedData c, String filepath, ReadCertsTask t, String callBackUrl,
+            int selected, JSObject jso, String signerCN) {
+    	this(c,filepath,t,callBackUrl,selected,jso);
+    	try {
+			this.signerCN = java.net.URLEncoder.encode(signerCN, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -176,7 +186,7 @@ public class FreeSignerSignApplet4 extends JFrame {
 					e2.printStackTrace();
 				}
 				
-				jso.eval("window.location.href='"+callBackUrl+"&mhash="+mhash+"'");
+				jso.eval("window.location.href='"+callBackUrl+"&mhash="+mhash+"&signercn="+this.signerCN+"'");
 				
 
             }

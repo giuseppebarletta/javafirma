@@ -12,10 +12,14 @@ import it.trento.comune.j4sign.pkcs11.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -50,7 +54,16 @@ public class FreeSignerSignApplet1 {
 	 */
 
 	public void sign(String filename, String lib, String callBackUrl, JSObject jso) {
-		System.out.println("FreeSignerApplet version git-7d72e56");
+		URLClassLoader cl = (URLClassLoader) getClass().getClassLoader();
+		try {
+		  URL url = cl.findResource("META-INF/MANIFEST.MF");
+		  Manifest manifest = new Manifest(url.openStream());
+		  Attributes attr = manifest.getMainAttributes();
+		  String value = attr.getValue("Versione");
+		  System.out.println("FreeSignerApplet version "+value);
+		} catch (IOException E) {
+		  E.printStackTrace();
+		}
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		task = new ReadCertsTask(null, lib, false);
 		task.go();

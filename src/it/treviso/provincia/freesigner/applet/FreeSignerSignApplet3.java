@@ -196,7 +196,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 				certData = bytesFromFile;
 			}
 			CMSSignedData actualFile = new CMSSignedData(certData);
-			this.msg = new CMSProcessableByteArray((byte[]) cms.getSignedContent().getContent());
+			this.msg = new CMSProcessableByteArray((byte[]) actualFile.getSignedContent().getContent());
 		} else {
 			this.msg = new CMSProcessableByteArray(getBytesFromFile(inputFile));
 		}
@@ -316,8 +316,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			this.cmsGenerator.addSignerInf(this.signerInfoGenerator);
 
 			this.signersCertList.add(javaCert);
-			javaCert.getSubjectX500Principal().toString();
-
+			this.signerCN = javaCert.getSubjectX500Principal().toString();
 		}
 	}
 
@@ -349,7 +348,14 @@ public class FreeSignerSignApplet3 extends JFrame {
 		 */
 		if (this.resign) {
 			try {
-				actualFile = new CMSSignedData(getBytesFromFile(new File(this.fileDaAprire)));
+				byte[] bytesFromFile = getBytesFromFile(new File(fileDaAprire));
+				byte[] certData;
+				try {
+					certData = Base64.decode(bytesFromFile); 
+				} catch (Exception eb64) { 
+					certData = bytesFromFile;
+				}
+				actualFile = new CMSSignedData(certData);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1048,4 +1054,5 @@ public class FreeSignerSignApplet3 extends JFrame {
     private boolean resign = false;
 	private String callBackUrl;
 	private JSObject jso;
+	private String signerCN = "";
 }
