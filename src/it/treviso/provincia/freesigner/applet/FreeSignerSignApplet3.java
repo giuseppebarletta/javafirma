@@ -322,9 +322,9 @@ public class FreeSignerSignApplet3 extends JFrame {
 
 			this.signersCertList.add(javaCert);
 			X500Name x500name = new JcaX509CertificateHolder(javaCert).getSubject();
-			RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+			//RDN cn = x500name.getRDNs(BCStyle.CN)[0];
 
-			this.signerCN = IETFUtils.valueToString(cn.getFirst().getValue());
+			this.signerCN = x500name.toString(); //IETFUtils.valueToString(cn.getFirst().getValue());
 		}
 	}
 
@@ -752,7 +752,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 					} else {
 						frame.hide();
 						FreeSignerSignApplet4 nuovo = new FreeSignerSignApplet4(
-								cms, fileDaAprire, taskBack, callBackUrl, selectedBack,jso);
+								cms, fileDaAprire, taskBack, callBackUrl, selectedBack,jso,signerCN);
 					}
 
 				}
