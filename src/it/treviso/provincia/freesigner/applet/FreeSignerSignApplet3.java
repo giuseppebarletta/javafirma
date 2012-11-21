@@ -321,10 +321,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			this.cmsGenerator.addSignerInf(this.signerInfoGenerator);
 
 			this.signersCertList.add(javaCert);
-			X500Name x500name = new JcaX509CertificateHolder(javaCert).getSubject();
-			//RDN cn = x500name.getRDNs(BCStyle.CN)[0];
 
-			this.signerCN = x500name.toString(); //IETFUtils.valueToString(cn.getFirst().getValue());
 		}
 	}
 
@@ -388,6 +385,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 			log.println("Generating CMSSignedData ");
 			s = this.cmsGenerator.generate(this.msg, true);
 
+			getSignerCN(s);
 			
 			/**
 			 * Resigning process:
@@ -442,7 +440,7 @@ public class FreeSignerSignApplet3 extends JFrame {
 				SignerInformation signer = (SignerInformation) it.next();
 				Collection certCollection = certs.getCertificates(signer
 						.getSID());
-
+				
 				if (certCollection.size() == 1) {
 					// Iterator certIt = certCollection.iterator();
 					// X509Certificate cert = (X509Certificate)
@@ -483,6 +481,28 @@ public class FreeSignerSignApplet3 extends JFrame {
 		}
 
 		return s;
+	}
+
+	private void getSignerCN(CMSSignedData s) throws NoSuchAlgorithmException, NoSuchProviderException, CMSException, CertStoreException {
+		CertStore certs = s.getCertificatesAndCRLs("Collection", "BC");
+		SignerInformationStore signers = s.getSignerInfos();
+		Collection c = signers.getSigners();
+		Iterator it = c.iterator();
+
+		// ciclo tra tutti i firmatari
+		int i = 0;
+		boolean verified = true;
+		while (it.hasNext() && verified) {
+			SignerInformation signer = (SignerInformation) it.next();
+			Collection certCollection = certs.getCertificates(signer.getSID());
+			if (certCollection.size() == 1) {
+
+				X509Certificate cert = (X509Certificate) certCollection
+						.toArray()[0];
+				this.signerCN = cert.getSubjectDN().toString();
+			}
+		}
+
 	}
 
 	/**
