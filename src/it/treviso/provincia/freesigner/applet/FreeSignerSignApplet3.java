@@ -489,17 +489,14 @@ public class FreeSignerSignApplet3 extends JFrame {
 		Collection c = signers.getSigners();
 		Iterator it = c.iterator();
 
-		// ciclo tra tutti i firmatari
-		int i = 0;
-		boolean verified = true;
-		while (it.hasNext() && verified) {
+		while (it.hasNext()) {
 			SignerInformation signer = (SignerInformation) it.next();
 			Collection certCollection = certs.getCertificates(signer.getSID());
-			if (certCollection.size() == 1) {
+			if (certCollection.size() > 0) {
 
-				X509Certificate cert = (X509Certificate) certCollection
-						.toArray()[0];
+				X509Certificate cert = (X509Certificate) certCollection.toArray()[0];
 				this.signerCN = cert.getSubjectDN().toString();
+				log.println("FFF signerCN ="+signerCN);
 			}
 		}
 

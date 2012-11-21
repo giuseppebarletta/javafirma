@@ -90,13 +90,18 @@ public class FreeSignerSignApplet4 extends JFrame {
         
     }
     public FreeSignerSignApplet4(CMSSignedData c, String filepath, ReadCertsTask t, String callBackUrl,
-            int selected, JSObject jso, String signerCN) {
-    	this(c,filepath,t,callBackUrl,selected,jso);
+            int selected, JSObject jso, String scn) {
+        fileDaAprire = new String(filepath);
+        cms = c;
+        this.callBackUrl = callBackUrl;
+        log = System.out;
+        this.jso = jso;
     	try {
-			this.signerCN = java.net.URLEncoder.encode(signerCN, "UTF-8");
+			this.signerCN = java.net.URLEncoder.encode(scn, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+    	this.doSave();
     }
 
     /**
