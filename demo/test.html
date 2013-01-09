@@ -1,0 +1,22 @@
+<html>
+<head></head>
+<body>
+
+<object code="it.treviso.provincia.freesigner.applet.FreeSignerSignApplet" type="application/x-java-applet" width="100" height="50">
+	<param name="archive" value="freesignerapplet.jar" />
+	<!-- file to sign. Result will be on the same directory -->
+	<param name="filename" value="c:\fakepath\in.pdf" />
+	<!-- path of the library of the card reader -->
+	<param name="devlib" value="U:\zinstall\dll\bit4ipki.dll" />
+	<!-- url called after the completion of the sign, passing the hash of the document as GET parameter -->
+	<param name="callback" value="http://pratiche.prov.tv.local/callback.php?key=blablabla" />
+      <strong>
+        This browser does not have a Java Plug-in.
+      </strong>
+      <br />
+      <a href="http://java.sun.com/products/plugin/downloads/index.html">
+        Get the latest Java Plug-in here.
+      </a> 
+</object>
+</body>
+</html>
