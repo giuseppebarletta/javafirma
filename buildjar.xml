@@ -2,7 +2,22 @@
 <project default="create_run_jar" name="Create Runnable Jar for Project javafirma">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
+    <!-- Define the CLASSPATH -->
+    <path id="compile.classpath">
+        <fileset dir="./lib/">
+          <include name="*.jar"/>
+        </fileset>
+        <fileset dir="/usr/share/icedtea-web/">
+          <include name="*.jar"/>
+        </fileset>
+    </path>
+
     <target name="create_run_jar">
+	<mkdir  dir="bin"/>
+	<javac srcdir="src/" destdir="bin/">
+            <classpath refid="compile.classpath"/>
+        </javac>
+	<mkdir  dir="signed"/>
 	<exec executable="/usr/bin/git" outputproperty="versione">
 		<arg value="describe" />
 		<arg value="--tags" />
@@ -20,7 +35,7 @@
             <zipfileset excludes="META-INF/*" src="./lib/j4sign-core.jar"/>
             <zipfileset excludes="META-INF/*" src="./lib/SmartCardAccess-signed.jar"/>
         </jar>
-	<signjar destDir="signed" alias="" storepass="" keystore="sign_javafirma.keystore">
+	<signjar destDir="signed" alias="ALIAS" storepass="PASSWORD" keystore="sign_javafirma.keystore">
 	  <path>
 	    <fileset dir="." includes="freesignerapplet.jar" />
 	  </path>
