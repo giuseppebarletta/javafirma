@@ -14,11 +14,11 @@
                 <attribute name="Class-Path" value="."/>
 		<attribute name="Versione" value="git-${versione}" />
             </manifest>
-            <fileset dir="/home/PROV2003/lorenzettoluca/workspace/javafirma/bin"/>
-            <zipfileset excludes="META-INF/*" src="/home/PROV2003/lorenzettoluca/workspace/javafirma/lib/bcmail-jdk16-146.jar"/>
-            <zipfileset excludes="META-INF/*" src="/home/PROV2003/lorenzettoluca/workspace/javafirma/lib/bcprov-jdk16-146.jar"/>
-            <zipfileset excludes="META-INF/*" src="/home/PROV2003/lorenzettoluca/workspace/javafirma/lib/j4sign-core.jar"/>
-            <zipfileset excludes="META-INF/*" src="/home/PROV2003/lorenzettoluca/workspace/javafirma/lib/SmartCardAccess-signed.jar"/>
+            <fileset dir="./bin"/>
+            <zipfileset excludes="META-INF/*" src="./lib/bcmail-jdk16-146.jar"/>
+            <zipfileset excludes="META-INF/*" src="./lib/bcprov-jdk16-146.jar"/>
+            <zipfileset excludes="META-INF/*" src="./lib/j4sign-core.jar"/>
+            <zipfileset excludes="META-INF/*" src="./lib/SmartCardAccess-signed.jar"/>
         </jar>
 	<signjar destDir="signed" alias="" storepass="" keystore="sign_javafirma.keystore">
 	  <path>
